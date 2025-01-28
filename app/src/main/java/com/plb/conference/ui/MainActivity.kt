@@ -1,4 +1,4 @@
-package com.plb.conference
+package com.plb.conference.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,19 +6,16 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.plb.conference.ui.screen.LoginScreen
 import com.plb.conference.ui.theme.ConferenceTheme
-import com.plb.conference.viewmodels.LoginViewModel
+import com.plb.conference.ui.viewmodels.LoginViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +38,9 @@ class MainActivity : ComponentActivity() {
                         onLoginSuccess = {
                             val intent = Intent(this, HomePageActivity::class.java)
                             startActivity(intent)
-                        }
+                        },
+                        keyboardController = LocalSoftwareKeyboardController.current,
+                        localFocusManager = LocalFocusManager.current
                     )
                 }
             }

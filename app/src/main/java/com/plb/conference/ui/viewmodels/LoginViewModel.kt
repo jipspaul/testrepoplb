@@ -1,7 +1,6 @@
-package com.plb.conference.viewmodels
+package com.plb.conference.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -16,15 +15,11 @@ class LoginViewModel() : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-
-
-
     private var _email = MutableStateFlow("") //TODO : approfondir private var val observer
     val email = _email.asStateFlow()
 
     private var _password = MutableStateFlow("")
     val password = _password.asStateFlow()
-
 
     fun updateEmail(newEmail: String) {
         _email.value = newEmail
@@ -35,6 +30,23 @@ class LoginViewModel() : ViewModel() {
     }
 
     fun tryLogin() {
+        val newEmail = _email.value
+        val newPassword = _password.value
+
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+            _uiState.value = LoginUiState(error = "Invalid email")
+            return
+        } else {
+            _uiState.value = LoginUiState(error = null)
+        }
+
+        if(newPassword.length < 6){
+            _uiState.value = LoginUiState(error = "Password must be at least 6 characters")
+            return
+        }else {
+            _uiState.value = LoginUiState(error = null)
+        }
+
         _uiState.value = LoginUiState(isSuccess = true)
     }
 
