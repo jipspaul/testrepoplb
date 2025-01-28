@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">conference</string>
+    <string name="mail">mail</string>
+    <string name="password">password</string>
 </resources>

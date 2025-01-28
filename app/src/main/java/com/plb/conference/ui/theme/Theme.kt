@@ -9,6 +9,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -49,9 +51,16 @@ fun ConferenceTheme(
         else -> LightColorScheme
     }
 
+    val typography = Typography.copy(
+        titleLarge = Typography.titleLarge.copy(
+            color =  colorScheme.secondary,
+            fontSize = 40.sp
+        ),
+    )
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }
