@@ -1,6 +1,7 @@
 package com.plb.conference.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.plb.conference.domain.MailVerificationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -33,16 +34,16 @@ class LoginViewModel() : ViewModel() {
         val newEmail = _email.value
         val newPassword = _password.value
 
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+        _uiState.value = LoginUiState(isSuccess = true)
+
+        if(!MailVerificationUseCase().isMailOK(newEmail)){
             _uiState.value = LoginUiState(error = "Invalid email")
-            return
         } else {
             _uiState.value = LoginUiState(error = null)
         }
 
         if(newPassword.length < 6){
             _uiState.value = LoginUiState(error = "Password must be at least 6 characters")
-            return
         }else {
             _uiState.value = LoginUiState(error = null)
         }
