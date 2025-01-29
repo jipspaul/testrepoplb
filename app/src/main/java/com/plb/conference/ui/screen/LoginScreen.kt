@@ -24,13 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.plb.conference.R
+import com.plb.conference.domain.models.User
 import com.plb.conference.ui.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
     viewModel : LoginViewModel,
-    onLoginSuccess: () -> Unit,
+    onLoginSuccess: (User) -> Unit,
     localFocusManager : FocusManager,
     keyboardController : SoftwareKeyboardController?,
 ) {
@@ -50,7 +51,7 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
-            onLoginSuccess()
+            onLoginSuccess(uiState.user!!)
         }
     }
 

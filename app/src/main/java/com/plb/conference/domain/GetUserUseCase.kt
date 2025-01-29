@@ -1,15 +1,22 @@
 package com.plb.conference.domain
 
 import com.plb.conference.domain.models.User
+import com.plb.conference.repositories.NetworkModule
 
 class GetUserUseCase {
-    fun getUser(): User {
-        return User(
-            id = 1,
-            full_name = "John Doe",
-            company = "Google",
-            email = "test@test.com",
-            password = "123",
-        )
+    suspend fun getUser(mail:String): User? {
+
+        // Get all db user
+        val users = NetworkModule.userApi.getUsers()
+
+        // Get list of users
+        val listUser = users.result
+
+        // Find user by email
+        val myUser = listUser.find { it ->
+            it.email == mail
+        }
+
+        return myUser
     }
 }

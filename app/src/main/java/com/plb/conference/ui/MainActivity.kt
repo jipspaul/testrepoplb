@@ -17,6 +17,7 @@ import com.plb.conference.ui.screen.LoginScreen
 import com.plb.conference.ui.theme.ConferenceTheme
 import com.plb.conference.ui.viewmodels.LoginViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.plb.conference.domain.models.User
 
 class MainActivity : ComponentActivity() {
 
@@ -35,8 +36,11 @@ class MainActivity : ComponentActivity() {
 
                     LoginScreen(
                         viewModel = loginViewModel,
-                        onLoginSuccess = {
+                        onLoginSuccess = { user ->
                             val intent = Intent(this, HomePageActivity::class.java)
+                            intent.putExtra("mail", user.email)
+                            intent.putExtra("name", user.full_name)
+
                             startActivity(intent)
                         },
                         keyboardController = LocalSoftwareKeyboardController.current,

@@ -58,6 +58,12 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation (libs.coil.compose)
+    implementation (libs.accompanist.permissions)
+    implementation (libs.retrofit)
+    implementation (libs.retrofit.gson)
+    implementation (libs.kotlinx.coroutines.android.v164)
+    implementation(libs.androidx.browser)
 
     // Testing dependencies
     testImplementation(libs.junit)

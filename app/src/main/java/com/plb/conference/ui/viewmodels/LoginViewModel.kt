@@ -1,14 +1,20 @@
 package com.plb.conference.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.plb.conference.domain.GetUserUseCase
 import com.plb.conference.domain.MailVerificationUseCase
+import com.plb.conference.domain.models.User
+import com.plb.conference.repositories.NetworkModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 data class LoginUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isSuccess: Boolean = false,
+    val user : User? = null,
 )
 
 class LoginViewModel() : ViewModel() {
@@ -48,7 +54,17 @@ class LoginViewModel() : ViewModel() {
             _uiState.value = LoginUiState(error = null)
         }
 
-        _uiState.value = LoginUiState(isSuccess = true)
+        viewModelScope.launch {
+            val user = GetUserUseCase().getUser(newEmail)
+            if(user == null){
+                _uiState.value = LoginUiState(error = "User not found")
+            }  else {
+                _uiState.value = LoginUiState(error = null)
+                _uiState.value = LoginUiState(isSuccess = true, user = user)
+            }
+        }
+
+       // _uiState.value = LoginUiState(isSuccess = true)
     }
 
 }
